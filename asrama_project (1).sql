@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 01, 2023 at 08:55 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.6
+-- Waktu pembuatan: 01 Mar 2023 pada 16.36
+-- Versi server: 10.4.27-MariaDB
+-- Versi PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `angkatan`
+-- Struktur dari tabel `angkatan`
 --
 
 CREATE TABLE `angkatan` (
@@ -32,20 +32,20 @@ CREATE TABLE `angkatan` (
   `angkatan` varchar(255) NOT NULL,
   `kelas` int(10) NOT NULL,
   `status` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `angkatan`
+-- Dumping data untuk tabel `angkatan`
 --
 
 INSERT INTO `angkatan` (`id_angkatan`, `angkatan`, `kelas`, `status`) VALUES
-(1, '10', 10, 'aktif'),
+(1, '10', 12, 'tidak aktif'),
 (2, '11', 10, 'aktif');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `catatan`
+-- Struktur dari tabel `catatan`
 --
 
 CREATE TABLE `catatan` (
@@ -53,33 +53,37 @@ CREATE TABLE `catatan` (
   `judul` varchar(255) DEFAULT NULL,
   `isi` mediumtext DEFAULT NULL,
   `id_pengguna` varchar(255) NOT NULL,
-  `id_siswas` int(10) NOT NULL,
-  `id_jurus` int(11) NOT NULL,
-  `id_angkat` int(11) NOT NULL,
+  `id_siswas` int(11) NOT NULL,
   `tanggal` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `catatan`
+-- Dumping data untuk tabel `catatan`
 --
 
-INSERT INTO `catatan` (`id_catatan`, `judul`, `isi`, `id_pengguna`, `id_siswas`, `id_jurus`, `id_angkat`, `tanggal`) VALUES
-(1, 'Aturan', NULL, '7', 1, 0, 0, '2023-03-01');
+INSERT INTO `catatan` (`id_catatan`, `judul`, `isi`, `id_pengguna`, `id_siswas`, `tanggal`) VALUES
+(1, 'Aturan', 'Hal Tersebut asadsfsdf', '7', 1, '2023-03-01'),
+(2, 'hello', 'Orang Baik', '7', 1, '2023-03-01'),
+(3, 'pelanggaran merokok', NULL, '7', 1, '2023-03-01'),
+(4, 'Potensi Dia', NULL, '7', 1, '2023-03-01'),
+(5, 'Potensi Dia', NULL, '7', 4, '2023-03-01'),
+(6, 'Mencari Jati Diri', NULL, '7', 2, '2023-03-01'),
+(7, 'Ngerokok', 'asddsdsad', '10', 2, '2023-03-01');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jurusan`
+-- Struktur dari tabel `jurusan`
 --
 
 CREATE TABLE `jurusan` (
   `id_jurusan` int(11) NOT NULL,
   `jurusan` varchar(255) NOT NULL,
   `id_angkatans` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `jurusan`
+-- Dumping data untuk tabel `jurusan`
 --
 
 INSERT INTO `jurusan` (`id_jurusan`, `jurusan`, `id_angkatans`) VALUES
@@ -91,7 +95,7 @@ INSERT INTO `jurusan` (`id_jurusan`, `jurusan`, `id_angkatans`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `komentar`
+-- Struktur dari tabel `komentar`
 --
 
 CREATE TABLE `komentar` (
@@ -99,12 +103,19 @@ CREATE TABLE `komentar` (
   `nama_user` varchar(255) NOT NULL,
   `id_catatans` int(11) NOT NULL,
   `komentar` varchar(1000) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `komentar`
+--
+
+INSERT INTO `komentar` (`id_komentar`, `nama_user`, `id_catatans`, `komentar`) VALUES
+(5, '7', 6, 'sdfsdf\r\nsdfsdf\r\n\r\n\r\nsdff');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nama_siswa`
+-- Struktur dari tabel `nama_siswa`
 --
 
 CREATE TABLE `nama_siswa` (
@@ -113,120 +124,122 @@ CREATE TABLE `nama_siswa` (
   `status` varchar(255) DEFAULT NULL,
   `id_jurusans` int(11) NOT NULL,
   `id_angkatanxx` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `nama_siswa`
+-- Dumping data untuk tabel `nama_siswa`
 --
 
 INSERT INTO `nama_siswa` (`id_siswa`, `nama_siswa`, `status`, `id_jurusans`, `id_angkatanxx`) VALUES
-(1, 'Dion', 'aktif', 1, 1),
-(2, 'Damas', 'aktif', 4, 2);
+(1, 'Dion', 'tidak aktif', 1, 1),
+(2, 'Damas', 'aktif', 4, 2),
+(3, 'Rafael', 'aktif', 1, 1),
+(4, 'Himarisanto', 'aktif', 1, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `level` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `level` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`, `level`) VALUES
 (5, 'Yoshua Tri Cahyo', '$2y$10$7GAWGpbGV5divQ1hQZry5O.ouZxAZLLYemhCwOn6MgtBNVl7KXUxC', '2023-02-12 03:11:23', '2023-02-12 03:11:23', 'pamong'),
 (7, 'Evy', '$2y$10$8Ivy/NKD9ZnncJFeWOKnZeD0GY1VfJWIrgFGAi1KVZypmmidh7oa.', '2023-02-16 08:56:23', '2023-02-25 05:09:33', 'pamong'),
-(8, 'Dion', '$2y$10$ocKL6UvgAkmLdNEqOT1WRuU1CBxlpWuPZtrIWAY2kDg.u4xc9tX46', '2023-02-16 09:52:14', '2023-02-19 05:13:48', 'pamong'),
-(9, 'arnold', '$2y$10$0uNMJWJ0Wdgkiz2ekReOqOGGnR5.dPg/MNkIv9bzQUGMnfxUaFoxG', '2023-02-18 06:47:02', '2023-02-18 06:47:02', 'pamong');
+(9, 'arnold', '$2y$10$0uNMJWJ0Wdgkiz2ekReOqOGGnR5.dPg/MNkIv9bzQUGMnfxUaFoxG', '2023-02-18 06:47:02', '2023-02-18 06:47:02', 'pamong'),
+(10, 'miki', '$2y$10$IaF/7eScgtqI5N6Wg.B1/OeiZ8Zf0jfluuFmV4xwJvp3lp19sTzTS', '2023-03-01 08:17:53', '2023-03-01 08:17:53', 'pamong');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `angkatan`
+-- Indeks untuk tabel `angkatan`
 --
 ALTER TABLE `angkatan`
   ADD PRIMARY KEY (`id_angkatan`);
 
 --
--- Indexes for table `catatan`
+-- Indeks untuk tabel `catatan`
 --
 ALTER TABLE `catatan`
   ADD PRIMARY KEY (`id_catatan`);
 
 --
--- Indexes for table `jurusan`
+-- Indeks untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
   ADD PRIMARY KEY (`id_jurusan`);
 
 --
--- Indexes for table `komentar`
+-- Indeks untuk tabel `komentar`
 --
 ALTER TABLE `komentar`
   ADD PRIMARY KEY (`id_komentar`);
 
 --
--- Indexes for table `nama_siswa`
+-- Indeks untuk tabel `nama_siswa`
 --
 ALTER TABLE `nama_siswa`
   ADD PRIMARY KEY (`id_siswa`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `angkatan`
+-- AUTO_INCREMENT untuk tabel `angkatan`
 --
 ALTER TABLE `angkatan`
   MODIFY `id_angkatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `catatan`
+-- AUTO_INCREMENT untuk tabel `catatan`
 --
 ALTER TABLE `catatan`
-  MODIFY `id_catatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_catatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `jurusan`
+-- AUTO_INCREMENT untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
   MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `komentar`
+-- AUTO_INCREMENT untuk tabel `komentar`
 --
 ALTER TABLE `komentar`
-  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_komentar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `nama_siswa`
+-- AUTO_INCREMENT untuk tabel `nama_siswa`
 --
 ALTER TABLE `nama_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
