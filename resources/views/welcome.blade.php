@@ -1,0 +1,1 @@
+tampilan awal buat yayasan,kepala sekolah dll
