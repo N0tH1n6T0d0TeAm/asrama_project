@@ -46,8 +46,8 @@
 </style>
 
 <a href="/catatan_siswa/{{$data->id_siswas}}" style="text-decoration: none">Kembali</a>
-<div class="isi_saja">
-    <h2>{{$data->judul}}</h2>
+<div class="isi_saja" style="display: flex; gap: 5px;">
+    <h2>{{$data->judul}}</h2> @if($data->id_pengguna == auth()->user()->id) <a href="/catatan_detail/{{$data->id_catatan}}" style="text-decoration: none">Edit</a> @else @endif
 </div>
 
 <div class="deskripsi" style="margin-top: 5px;">
@@ -62,7 +62,7 @@
 
 <form action="/tambah_komentar" method="POST">
 @csrf
-<input type="text" name="komentar" class="form-control komen" placeholder="Tambahkan Komentar"  />
+<textarea name="komentar" class="form-control komen" placeholder="Tambahkan Komentar"></textarea>
 <input type="hidden" class="form-control komen" name="username" value="{{auth()->user()->id}}"  />
 <input type="hidden" class="form-control komen" name="id_catatan" value="{{$data->id_catatan}}"  />
 <button class="tombol"><i class="fa fa-paper-plane"></i></button>
@@ -72,8 +72,8 @@
     @foreach($komen as $k)
     <div class="isinya" style="background: #a52a2a2b;padding: 5px; margin-left: -5px; width: 101%;">
     @if($k->nama_user == auth()->user()->id)
-    <b style="color: #6610f2;">Anda</b> {{$k->komentar}}
-    <a href="#" class="hapus" komen-id="{{$k->id_komentar}}">Hapus</a>
+    <pre><b style="color: #6610f2;">Anda</b> {{$k->komentar}} <a href="#" class="hapus" komen-id="{{$k->id_komentar}}">Hapus</a></pre>
+    
     @else
     <b>{{$k->userz->username}}</b>  {{$k->komentar}}
     @endif

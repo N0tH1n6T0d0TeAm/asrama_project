@@ -126,7 +126,6 @@
         <ul>
             <li><a href="/home"><i class="fa fa-home"></i>Beranda</a></li>
             <li><a href="/pengguna"><i class="fas fa-user"></i>Pengguna</a></li>
-            <li><a href="/catatan_pribadi/{{auth()->user()->id}}"><i class="fa fa-pencil"></i>Catatan Anda</a></li>
             <li><a href="/catatan_publik/"><i class="fa fa-pencil-square"></i>Catatan Publik</a></li>
             <li><a href="/status_tidak_aktif/"><i class="fa fa-arrow-down"></i>Status Tidak Aktif</a></li><br><br><br><br><br><br><br><br>
             <li><a href="/logout"><i class="fas fa-chevron-circle-left"></i>Log Out</a></li>

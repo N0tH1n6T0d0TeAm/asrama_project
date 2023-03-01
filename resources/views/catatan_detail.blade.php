@@ -40,7 +40,7 @@
     <input type="text" class="form-control judul" name="judul"  value="{{$data->judul}}" placeholder="Judul"/>
 
     <div class="theButtons">
-    <a href="/catatan_pribadi/{{$data->id_pengguna}}" class="btn btn-primary kembali">Kembali</a>
+    <a href="/isi_catatan/{{$data->id_catatan}}" class="btn btn-primary kembali">Kembali</a>
     <a href="#" style="color: white" class="btn btn-danger hapus" id-saja="{{$data->id_catatan}}">Hapus Catatan Ini !</a>
     </div>
 

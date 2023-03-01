@@ -22,6 +22,9 @@ tr:nth-child(odd) {
         <th>No</th>
         <th>Judul</th>
         <th>Kepada</th>
+        <th>Kelas</th>
+        <th>Jurusan</th>
+        <th>Angkatan</th>
         <th>Tanggal</th>
         <th>Penulis</th>
     </tr>
@@ -53,7 +56,10 @@ tr:nth-child(odd) {
         <tr>
             <td>{{$no++}}</td>
             <td><a href="/isi_catatan/{{$k->id_catatan}}" style="text-decoration: none;">{{$k->judul}}</a></td>
-            <td><a href="/catatan_siswa/{{$k->id_siswas}}" style="text-decoration: none;">{{$k->judul}}</a></td>
+            <td><a href="/catatan_siswa/{{$k->id_siswas}}" style="text-decoration: none;">{{$k->siswa->nama_siswa}}</a></td>
+            <td>{{$k->siswa->Angkatannn->kelas}}</td>
+            <td>{{$k->siswa->jurusanzzz->jurusan}}</td>
+            <td>A-{{$k->siswa->Angkatannn->angkatan}}</td>
             <td>{{tgl_indo($k->tanggal)}}</td>
            <td>
             @if($k->id_pengguna == auth()->user()->id)

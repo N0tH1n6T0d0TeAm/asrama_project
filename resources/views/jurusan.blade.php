@@ -111,7 +111,7 @@ a.keluar{
         <h2>Tambah Jurusan<a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
         <label>Jurusan</label><br>
-        <input class="form-control" type="text" name="jurusan" placeholder="Angkatan" /><br>
+        <input class="form-control" type="text" name="jurusan" placeholder="Jurusan" /><br>
 
 
         

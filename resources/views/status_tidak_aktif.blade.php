@@ -60,6 +60,7 @@
         <th>Nama<th>
         <th>Kelas<th>
         <th>Jurusan</th>
+        <th>Angkatan</th>
         <th>Kembalikan</th>
     </tr> 
     
@@ -71,6 +72,10 @@
             <td>{{$no++}}</td>
             <td><a href="/catatan_siswa/{{$k->id_siswa}}" style="text-decoration: none">{{$k->nama_siswa}}</a></td>
             <td></td>
+            <td>{{$k->Angkatannn->kelas}}</td>
+            <td></td>
+            <td>{{$k->jurusanzzz->jurusan}}</td>
+            <td>A-{{$k->Angkatannn->angkatan}}</td>
             <td>
                 <input type="hidden" name="status" id="status" value="aktif" />
                 <button class="btn btn-info ulang" value="{{$k->id_siswa}}"><i class="fa fa-refresh"></i></button>
