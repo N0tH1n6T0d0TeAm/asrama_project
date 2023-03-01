@@ -67,7 +67,7 @@ class asramaProject extends Controller
         $tabel = new catatan_asrama;
         $tabel->judul = $req->judul_catatan;
         $tabel->isi = NULL;
-        $tabel->id_siswas = $req->nama_siswa;
+        $tabel->id_siswas = $req->id_siswa;
         $tabel->id_pengguna = $req->id_peng;
         $tabel->tanggal = $req->tanggal;
         $tabel->save();
@@ -271,13 +271,13 @@ public function lihat_angkatan_kelas_11(){
  }
 
  public function lihat_angkatan_kelas_12(){
-    $tabel = Angkatan::where('kelas', 12)->get();
+    $tabel = Angkatan::where('kelas', 12)->where('status','aktif')->get();
     return view('kelas_12',['data' => $tabel]);
  }
 
  public function update_status_angkatan($id,$status){
     $tabel = Angkatan::find($id);
-    $tabel->kelas = 0;
+    $tabel->kelas = 12;
     $tabel->status = $status;
     $tabel->update();
     return back();
