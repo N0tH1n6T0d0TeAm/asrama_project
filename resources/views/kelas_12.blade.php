@@ -22,7 +22,7 @@ tr:nth-child(odd) {
     font-size: 20px;
     margin-left: 5px;
 }
-    .overlay{
+.overlay{
         position: fixed;
         top: 0;
         bottom: 0;
@@ -39,8 +39,8 @@ tr:nth-child(odd) {
     transition: 0.3s;
 }
 .overlay .info input{
-    margin-left: 5px;
-    width: 30em;
+    margin: 5px 10px auto;
+    width: 90%;
 }
 .overlay .info select{
     margin-left: 5px;
@@ -51,46 +51,82 @@ tr:nth-child(odd) {
 }
 
 .info .lol{
-    margin-left: 25em;
+    position: fixed;
+    margin: 5% 30% auto;
     background: #fff;
     width: 40%;
-    text-align: justify;
-    height: 13em;
     border-radius: 3px;
     padding: 10px 0;
 }
 .lol button{
-    margin-left: 25em;
-    margin-top: -25px;
+    float: right;
+    margin: 10px;
 }
 a.keluar{
-    margin-left: 15em;
+    float: right;
     color: black;
     text-decoration: none;
 }
+.show-hide{
+   position:absolute;
+   right: 3em;
+   top: 66%;
+   transform: translateY(-50%);
+   cursor: pointer;
+}
 
+@media(max-width: 500px) {
+  .info .lol{
+    margin-left: 1em;
+    width: 70%;
+  }
+
+  .show-hide{
+   position:absolute;
+   right: 2em;
+   top: 66%;
+   transform: translateY(-50%);
+   cursor: pointer;
+}
+}
 
 </style>
-
+@if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
     <a href="#tambah" style="text-decoration: none">Tambah Angkatan</a>
-
+@endif
 
    <table>
+   @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
         <tr>
+            <th>No</th>
             <th>Angkatan</th>
             <th>Lulus</th>
             <th>
             <th>Hapus</th>
         </tr>
-
+    @else
+    <tr>    
+            <th>No</th>
+            <th>Angkatan</th>
+        </tr>
+    @endif
+@php $no = 1 @endphp
         @foreach($data as $p)
+        @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
             <tr>
+                <td>{{$no++}}</td>
                 <td><a href="/jurusan/{{$p->id_angkatan}}" style="text-decoration: none">A-{{$p->angkatan}}</a></td>
                 
                 <td><button type="button" lolz="{{$p->id_angkatan}}" class="btn btn-success hmm" title="Telah Lulus"><i class="fa fa-arrow-right"></i></button></td>
                 <td><input type="hidden" style="width: 20%;" id="status" name="status" value="tidak aktif"></td>
                 <td><button zzz="{{$p->id_angkatan}}" class="btn btn-danger hapus"><i class="fa fa-trash"></i></button></td>
             </tr>
+        @else
+        <tr>
+                <td>{{$no++}}</td>
+                <td><a href="/jurusan/{{$p->id_angkatan}}" style="text-decoration: none">A-{{$p->angkatan}}</a></td>
+            </tr>
+        @endif
         @endforeach
    </table>
 
@@ -104,11 +140,11 @@ a.keluar{
         <h2>Tambah Angkatan<a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
         <label>Angkatan</label><br>
-        <input class="form-control" type="number" name="angkatan" placeholder="Angkatan" /><br>
+        <input class="form-control" type="number" name="angkatan" placeholder="Angkatan" />
 
 
         
-         <input class="form-control" type="hidden" value="12" name="kelas" placeholder="Kelas" /><br>
+         <input class="form-control" type="hidden" value="12" name="kelas" placeholder="Kelas" />
          
         <button class="btn btn-primary">Tambah</button>
         </form>

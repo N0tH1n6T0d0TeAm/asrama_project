@@ -2,24 +2,40 @@
 @section('konten')
 
 <style>
-table {
+ table {
+  border: 1px solid #ccc;
   border-collapse: collapse;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  margin-top: 10px;
+  table-layout: fixed;
 }
 
-th, td {
-  text-align: left;
-  padding: 8px;
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
 }
 
-tr:nth-child(odd) {
-    background-color: #f2f2f2;
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
 }
 
 .links{
     Text-Decoration: None !important;
-    margin-left: 50em;
 }
 
 .overlay h2{
@@ -43,41 +59,103 @@ tr:nth-child(odd) {
     transition: 0.3s;
 }
 .overlay .info input{
-    margin-left: 5px;
-    width: 30em;
+    margin: 5px 10px auto;
+    width: 90%;
 }
+
 .overlay .info select{
-    margin-left: 5px;
-    width: 30em;
+    margin: 5px 10px auto;
+    width: 90%;
 }
+
 .overlay .info label{
     margin-left: 5px;
 }
 
 .info .lol{
-    margin-left: 25em;
+    position: fixed;
+    margin: 5% 30% auto;
     background: #fff;
     width: 40%;
-    text-align: justify;
-    height: 18em;
     border-radius: 3px;
     padding: 10px 0;
 }
 .lol button{
-    margin-left: 25em;
-    margin-top: -5px;
+    float: right;
+    margin: 10px;
 }
 a.keluar{
-    margin-left: 15em;
+    float: right;
     color: black;
     text-decoration: none;
 }
 .show-hide{
    position:absolute;
-   right: 24em;
-   top: 37%;
+   right: 3em;
+   top: 66%;
    transform: translateY(-50%);
    cursor: pointer;
+}
+
+@media(max-width: 500px) {
+  .info .lol{
+    margin-left: 1em;
+    width: 70%;
+  }
+
+  .show-hide{
+   position:absolute;
+   right: 2em;
+   top: 66%;
+   transform: translateY(-50%);
+   cursor: pointer;
+}
+
+table {
+    border: 0;
+  }
+
+  
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+
 }
 </style>
 </head>
@@ -86,6 +164,7 @@ a.keluar{
 
 <a href="#tambah" class="links">Tambah Pengguna</a>
 <table>
+  <thead>
   <tr>
   <th>No</th>
   <th>Nama</th>
@@ -93,16 +172,17 @@ a.keluar{
   <th>Update</th>
   <th>Hapus</th>
   </tr>
+</thead>
 
-
+<tbody>
 @php
     $no = 1;
 @endphp
   @foreach($data as $p)
     <tr>
-        <td>{{$no++}}</td>
-        <td>{{$p->username}}</td>
-        <td>
+        <td data-label = "no">{{$no++}}</td>
+        <td data-label = "username">{{$p->username}}</td>
+        <td data-label = "status">
             @if($p->isOnline())
                 <li class="text-success">&#x2022; Online</li>
             @else
@@ -110,19 +190,22 @@ a.keluar{
             @endif
         </td>
        
-        <td>
+        <td data-label = "Update">
          @if(auth()->user()->id == $p->id)
         <a href="#update"><button class="btn btn-success updates" value="{{$p->id}}"><i class="fa fa-pencil-square"></i></button></a>
+        @else
+        <br>
          @endif
         </td>
        
-        <td>
+        <td data-label = "hapus">
         @if(auth()->user()->id != $p->id)
         <a href="#" class="btn btn-danger hapus" id_data="{{$p->id}}"><i class="fa fa-trash"></i></a>
         @endif
         </td>
     </tr>
   @endforeach
+</tbody>
 </table>
 
 
@@ -131,13 +214,32 @@ a.keluar{
             <div class="lol">
         <form action="/tambahPengguna" method="POST">
         @csrf
+        @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
         <h2>Tambah Pengguna <a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
         <label>Nama Pengguna</label><br>
         <input class="form-control" type="text" name="username" placeholder="Nama Pengguna" /><br>
+        <input class="form-control" type="hidden" name="level" placeholder="Level" value="pamong" />
         <label>Password</label><br>
         <input class="form-control" type="password" value="Rahasia" name="password" id="pass2" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
         <button class="btn btn-primary">Tambah</button>
+        @else
+        <h2>Tambah Pengguna <a href="#" class="keluar">&times</a></h2>
+        <hr style="border: 1px solid black;margin-top: -3px;">
+        <label>Nama Pengguna</label><br>
+        <input class="form-control" type="text" name="username" placeholder="Nama Pengguna" /><br>
+        <label>Level</label><br>
+
+        <select class="form-control" name="level">
+          <option>Yayasan</option>
+          <option>Kepala Sekolah</option>
+          <option>Guru</option>
+        </select>
+
+        <label>Password</label><br>
+        <input class="form-control" type="password" value="Rahasia" name="password" id="pass2" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
+        <button class="btn btn-primary">Tambah</button>
+        @endif
         </form>
             </div>
         </div>
@@ -158,7 +260,7 @@ a.keluar{
         <input id="nama" class="form-control" type="text" name="username" placeholder="Nama Pengguna" /><br>
         <label>Password</label><br>
         <input class="form-control" type="password" value="Rahasia" name="password" id="pass" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
-        <button class="btn btn-primary">Tambah</button>
+        <button class="btn btn-primary">Update</button>
         </form>
             </div>
         </div>

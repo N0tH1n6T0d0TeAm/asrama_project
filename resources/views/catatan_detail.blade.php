@@ -31,6 +31,74 @@
     .kembali{
         margin-left: -3em;
     }
+    @media(max-width: 4000px){
+        .isi .theButtons{
+            margin: -3% 70% auto;
+            width: 250px;
+        }
+    }
+
+    @media(max-width:1420px){
+        .isi .theButtons{
+            margin: -5% 70% auto;
+            width: 288px;
+        }
+    
+    @media(max-width: 770px){
+        .isi{
+            overflow: hidden;
+        }
+        .isi .theButtons{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .kembali{
+            width: 30%;
+            margin-left: 10px;
+            margin-top: -30px;
+        }
+        .hapus{
+            width: 110%;
+            margin-top: 20px;
+            margin-left: -14em;
+            padding: 2px;
+        }
+        .tombol{
+            margin-left: 9em;
+        }
+    }
+
+    @media(max-width: 400px){
+            .isi{
+                overflow: hidden;
+            }
+            .kembali{
+                margin-left: -12px;
+                width: 28%;
+            }
+
+            .hapus{
+                width: 80%;
+                margin-left: -10em;
+            }
+            .tombol{
+                margin-left: 130px;
+            }
+        }
+
+    @media(max-width: 300px){
+            .tombol{
+                margin-left: 80px;
+            }
+        }
+
+    @media(max-width: 1026px){
+        .tombol{
+                margin-left: 50%;
+            }
+    }
+    }
 </style>
 <div class="isi">
 <form action="/update_catatan" method="POST">
@@ -70,7 +138,7 @@ $('.hapus').click(function(){
             window.location = '/hapus_catatan/'+id;
             swal('Berhasil Menghapus Data Ini!',{icon: "success"})
         }else{
-            swal('Data Anda Aman');
+            swal('Data Anda Aman',{icon: "info"});
         }
     })
 })

@@ -9,15 +9,82 @@
         margin: 7px;
         transition: 10s ease;
     }
-    table{
-        width: 80%;
-        margin-top: 4px;
-        background: #f3f5f9;
-        width: 100%;
+    table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+    .kosong{
+        display: none;
     }
-    th, td{
-        padding: 10px;
-    }
+
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
     .sub-angkatan{
         display: none;
     }
@@ -30,58 +97,93 @@
 
 
 <table class="sub-angkatan">
+    <thead>
+    @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
     <tr>
         <th>No</th>
         <th>Angkatan<th>
         <th>Kembalikan</th>
     </tr> 
+    @else
+    <tr>
+        <th>No</th>
+        <th>Angkatan<th>
+    </tr>
+    @endif
+</thead>
     
 
-    @php $no = 1 @endphp
+    @php $no = 1; $no2 = 1 @endphp
 
+    <tbody>
     @foreach($data as $k)
+    @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
         <tr>
-            <td>{{$no++}}</td>
-            <td><a href="/jurusan/{{$k->id_angkatan}}" style="text-decoration: none">A-{{$k->angkatan}}</a></td>
-            <td></td>
-            <td>
+            <td data-label="no">{{$no++}}</td>
+            <td data-label="angkatan"><a href="/jurusan/{{$k->id_angkatan}}" style="text-decoration: none">A-{{$k->angkatan}}</a></td>
+            <td class="kosong"></td>
+            <td data-label="kembalikan">
                 <input type="hidden" name="status" id="status" value="aktif" />
                 <button class="btn btn-info ulangs" value="{{$k->id_angkatan}}" id="ulang"><i class="fa fa-refresh"></i></button>
             </td>
         </tr>
+    @else
+    <tr>
+            <td data-label="no">{{$no++}}</td>
+            <td data-label="angkatan"><a href="/jurusan/{{$k->id_angkatan}}" style="text-decoration: none">A-{{$k->angkatan}}</a></td>
+            <td class="kosong"></td>
+        </tr>
+    @endif
     @endforeach
+</tbody>
 </table>
 <br>
 
 <a href="#" class="form-control nama_siswa" style="text-decoration: none;">Nama Siswa<i class="fas fa-angle-right dropdown"></i></a>
+
 <table class="sub-siswa">
-    <tr>
+    <thead>
+    @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
         <th>No</th>
-        <th>Nama<th>
-        <th>Kelas<th>
+        <th>Nama Siswa</th>
+        <th>Kelas</th>
         <th>Jurusan</th>
         <th>Angkatan</th>
         <th>Kembalikan</th>
-    </tr> 
-    
+    @else
+        <th>No</th>
+        <th>Nama Siswa</th>
+        <th>Kelas</th>
+        <th>Jurusan</th>
+        <th>Angkatan</th>
+    @endif
+</thead>
 
-    @php $no = 1 @endphp
-
+<tbody>
     @foreach($data2 as $k)
-        <tr>
-            <td>{{$no++}}</td>
-            <td><a href="/catatan_siswa/{{$k->id_siswa}}" style="text-decoration: none">{{$k->nama_siswa}}</a></td>
-            <td></td>
-            <td>{{$k->Angkatannn->kelas}}</td>
-            <td></td>
-            <td>{{$k->jurusanzzz->jurusan}}</td>
-            <td>A-{{$k->Angkatannn->angkatan}}</td>
-            <td>
+    @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
+    <tr>
+            <td data-label="No">{{$no2++}}</td>
+            <td data-label="nama siswa"><a href="/catatan_siswa/{{$k->id_siswa}}" style="text-decoration: none">{{$k->nama_siswa}}</a></td>
+            <td data-label="kelas">{{$k->Angkatannn->kelas}}</td>
+            <td data-label="Jurusan">{{$k->jurusanzzz->jurusan}}</td>
+            <td data-label="Angkatan">A-{{$k->Angkatannn->angkatan}}</td>
+            <td data-label = "kembalikan">
                 <input type="hidden" name="status" id="status" value="aktif" />
                 <button class="btn btn-info ulang" value="{{$k->id_siswa}}"><i class="fa fa-refresh"></i></button>
             </td>
         </tr>
+    @else
+    <tr>
+            <td data-label="No">{{$no2++}}</td>
+            <td data-label="nama siswa"><a href="/catatan_siswa/{{$k->id_siswa}}" style="text-decoration: none">{{$k->nama_siswa}}</a></td>
+            <td data-label="kelas">{{$k->Angkatannn->kelas}}</td>
+            <td data-label="Jurusan">{{$k->jurusanzzz->jurusan}}</td>
+            <td data-label="Angkatan">A-{{$k->Angkatannn->angkatan}}</td>
+    </tr>
+    @endif
     @endforeach
+</tbody>
 </table>
 
 <script type="text/javascript">

@@ -56,6 +56,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+    
     *{
         margin:0;
         padding:0;
@@ -71,12 +72,16 @@
         display: flex;
         position: relative;
     }
+    .menu{
+      visibility: hidden;
+    }
     .wrapper .sidebar{
         position: fixed;
         width: 200px;
         height: 100%;
         background:#4b4276;
         padding: 30px 0;
+        transition-property: left;
     }
     .wrapper .sidebar h2{
         color: #fff;
@@ -119,9 +124,37 @@
     .wrapper .main-content .info{
         margin: 20px;
     }
+    .close{
+        display: none;
+    }
+    @media(max-width: 500px){
+        .wrapper .sidebar{
+            display: none;
+            z-index: 1;
+            
+        }
+        .wrapper .main-content{
+            margin-left: 0px;
+        }
+        .menu{
+            visibility: visible;
+        }   
+        
+        .sidebar.active{
+            display:block;
+        }
+        .close{
+            display: block;
+            margin: 10px;
+            margin-top: -20px;
+            border: none;
+            color: #fff;
+        }
+    }
 </style>
 <div class="wrapper">
     <div class="sidebar">
+    <i class="fas fa-times close"></i>
         <h2 style="font-size: 20px;">DormNote</h2>
         <ul>
             <li><a href="/home"><i class="fa fa-home"></i>Beranda</a></li>
@@ -132,9 +165,19 @@
         </ul>
     </div>
     <div class="main-content">
-    <div class="header">Selamat Datang {{auth()->user()->username}} !</div>
+    <div class="header"><i class="fas fa-bars menu"></i> Selamat Datang {{auth()->user()->username}} !</div>
     <div class="info">
         <div>@yield('konten')</div>
     </div>
     </div>
 </div>
+
+<script>
+    $('.menu').click(function(){
+        $('.sidebar').addClass('active');
+  });
+
+  $('.close').click(function(){
+    $('.sidebar').removeClass('active');
+  })
+</script>
