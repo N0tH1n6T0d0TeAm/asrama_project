@@ -14,13 +14,16 @@ use App\Http\Controllers\asramaProject;
 |
 */
 
-Route::get('adminLogin', function () {
-    return view('login');
-})->middleware('guest')->name('login');;
+//Route::view('test','test');
+
+// Route::get('adminLogin', function () {
+//     return view('login');
+// })->middleware('guest')->name('login');
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('login');
+})->middleware('guest')->name('login');
+
 
 Route::view('navbar','navbar');
 
