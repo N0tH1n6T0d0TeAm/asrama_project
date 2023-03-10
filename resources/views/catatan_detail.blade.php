@@ -31,18 +31,36 @@
     .kembali{
         margin-left: -3em;
     }
+    .row{
+        margin-top: -2.1em;
+        margin-left: 5.5em;
+    }
+
+    .row a{
+        padding: 2px;
+        width: 1.8%;
+    }
+
+    
+
     @media(max-width: 4000px){
         .isi .theButtons{
             margin: -3% 70% auto;
             width: 250px;
         }
+
+    
+        
     }
 
     @media(max-width:1420px){
+        
         .isi .theButtons{
             margin: -5% 70% auto;
             width: 288px;
         }
+
+       
     
     @media(max-width: 770px){
         .isi{
@@ -52,6 +70,13 @@
             display: flex;
             flex-direction: column;
         }
+
+
+        .row a{
+        width: 7%;
+        }
+
+       
 
         .kembali{
             width: 30%;
@@ -67,9 +92,14 @@
         .tombol{
             margin-left: 9em;
         }
+
     }
 
     @media(max-width: 400px){
+        .row a{
+        width: 12%;
+        }
+
             .isi{
                 overflow: hidden;
             }
@@ -89,7 +119,7 @@
 
     @media(max-width: 300px){
             .tombol{
-                margin-left: 80px;
+                margin-left: 70px;
             }
         }
 
@@ -97,6 +127,10 @@
         .tombol{
                 margin-left: 50%;
             }
+
+            .row a{
+        width: 12%;
+        }
     }
     }
 </style>
@@ -112,7 +146,19 @@
     <a href="#" style="color: white" class="btn btn-danger hapus" id-saja="{{$data->id_catatan}}">Hapus Catatan Ini !</a>
     </div>
 
+
     <hr>
+    
+    
+    <select name="kategori" class="form-control">
+        <option value="NULL">Kategori</option>
+    </select>
+
+    <div class="row">
+    <a href="#tambah_kategori" class="btn btn-success" class="kategs">+</a>
+    </div>
+
+    <br><br>
 
 
     <textarea class="form-control" name="deskripsi" style="height: 30em;"  value="" placeholder="Deskripsi...">{{$data->isi}}</textarea>

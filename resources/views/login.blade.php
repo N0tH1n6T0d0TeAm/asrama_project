@@ -100,10 +100,15 @@ button:hover {
 }
 </style>
 
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h1>Login</h1>
 <form action="/postLogin" method="POST">
     @csrf
+    <div class="row" style="text-align: center">
+    {{@session('error')}}
+    </div>
+    
   <div class="row">
     <label for="username">Username</label>
     <input type="username" name="username" placeholder="username">
