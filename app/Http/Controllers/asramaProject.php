@@ -18,25 +18,25 @@ class asramaProject extends Controller
         if(Auth::attempt($req->only('username','password'))){
             return redirect('home');
         }
-        return redirect('/adminLogin');
+        return redirect('/')->with("error", "Maaf Akun Anda Masukan Salah!");
     }
 
     public function logout(){
         Auth::logout();
-        return redirect('/adminLogin');
+        return redirect('/');
     }
 
     public function tambahPengguna(Request $req){
         $table = new User;
         $table->username = $req->username;
         $table->password = bcrypt($req->password);
-        $table->level = "pamong";
+        $table->level = $req->level;
         $table->save();
         return back();
     }
 
     public function lihat_pengguna(){
-        $table = User::all();
+        $table = User::where('level','guru')->orWhere('level','yayasan')->orWhere('level','pamong')->get();
         return view('pengguna',['data'=>$table]);
     }
 
