@@ -38,12 +38,12 @@ table th {
     border: 0;
   }
 
-  
+
 
   table caption {
     font-size: 1.3em;
   }
-  
+
   table thead {
     border: none;
     clip: rect(0 0 0 0);
@@ -54,38 +54,71 @@ table th {
     position: absolute;
     width: 1px;
   }
-  
+
   table tr {
     border-bottom: 3px solid #ddd;
     display: block;
     margin-bottom: .625em;
   }
-  
+
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
     text-align: right;
   }
-  
+
   table td::before {
     content: attr(data-label);
     float: left;
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   table td:last-child {
     border-bottom: 0;
   }
 }
 </style>
 
-<table>
+
+@php
+$no = 1;
+function tgl_indo($tanggal){
+    $bulan = array(
+        1=>
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    );
+    $lol = explode('-',$tanggal);
+    return $lol[2].' '.$bulan[(int)$lol[1]].' '.$lol[0];
+}
+@endphp
+
+
+<select class="form-control filter-handle">
+<option value="">Kategori</option>
+@foreach($data2 as $ks)
+<option value="{{ $ks->kategori }}">{{ $ks->kategori }}</option>
+@endforeach
+</select><br>
+
+<table class="filter-table-data">
     <thead>
     <tr>
         <th>No</th>
         <th>Judul</th>
+        <th>Kategori</th>
         <th>Kepada</th>
         <th>Kelas</th>
         <th>Jurusan</th>
@@ -96,34 +129,12 @@ table th {
 </thead>
 
 
-    @php
-        $no = 1;
-        function tgl_indo($tanggal){
-            $bulan = array(
-                1=>
-                'Januari',
-                'Februari',
-                'Maret',
-                'April',
-                'Mei',
-                'Juni',
-                'Juli',
-                'Agustus',
-                'September',
-                'Oktober',
-                'November',
-                'Desember',
-            );
-            $lol = explode('-',$tanggal);
-            return $lol[2].' '.$bulan[(int)$lol[1]].' '.$lol[0];
-        }
-    @endphp
-
     @foreach($data as $k)
-  
-        <tr>
+
+        <tr data-type="{{ $k->kategoris->kategori ?? '' }}">
             <td data-label="no">{{$no++}}</td>
             <td data-label="judul"><a href="/isi_catatan/{{$k->id_catatan}}" style="text-decoration: none;">{{$k->judul}}</a></td>
+            <td data-label="Kategori">{{ $k->kategoris->kategori ?? "Belum Ada Kategori" }}</td>
             <td data-label="Nama Siswa"><a href="/catatan_siswa/{{$k->id_siswas}}" style="text-decoration: none;">{{$k->siswa->nama_siswa}}</a></td>
             <td data-label="Kelas">{{$k->siswa->Angkatannn->kelas}}</td>
             <td data-label="jurusan">{{$k->siswa->jurusanzzz->jurusan}}</td>
@@ -137,7 +148,25 @@ table th {
            @endif
            </td>
         </tr>
-    
+
     @endforeach
 </table>
+
+<script>
+    $('.filter-handle').on('change', function(e) {
+
+  var location = e.target.value;
+  var table = $('.filter-table-data');
+
+  if (location.length) {
+
+    table.find('tr[data-type!=' + location + ']').hide();
+
+    table.find('tr[data-type=' + location + ']').show();
+  } else {
+    
+    table.find('tr').show();
+  }
+});
+</script>
 @endsection

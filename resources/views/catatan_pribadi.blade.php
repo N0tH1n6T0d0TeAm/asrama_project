@@ -74,8 +74,10 @@ a.keluar{
 </style>
 
     <table>
-            <a href="#tambah" class="links">Tambah Judul</a>
+            <a href="/home" class="links">Pergi Ke Beranda</a>
         <table>
+
+        <h2 align="center">Catatan Anda Lainnya</h2>
 
         <tr>
             <th>No</th>
@@ -109,44 +111,20 @@ a.keluar{
             $meledak = explode('-',$tanggal);
             return $meledak[2].' '.$bulan[(int)$meledak[1]].' '.$meledak[0];
         }
-        @endphp     
+        @endphp
 
     @foreach($data as $k)
     <tr>
         <td>{{$no++}}</td>
         <td><a href="/catatan_detail/{{$k->id_catatan}}" style="text-decoration: none;">{{$k->judul}}</a></td>
         <td><a href="/catatan_siswa/{{$k->id_siswas}}" style="text-decoration: none">{{$k->siswa->nama_siswa ?? "Tidak Ada Data"}}</a></td>
-        <td></td>
-        <td></td>
+        <td>{{$k->siswa->Jurusanzzz->jurusan }}</td>
+        <td>A-{{ $k->siswa->Angkatannn->angkatan }}</td>
         <td>{{tgl_indo($k->tanggal)}}</td>
     </tr>
     @endforeach
 
     </table>
 
-    <div id="tambah" class="overlay">
-        <div class="info">
-            <div class="lol">
-        <form action="/tambah_catatan" method="POST">
-        @csrf
-        <h2>Tambah Catatan <a href="#" class="keluar">&times</a></h2>
-        <hr style="border: 1px solid black;margin-top: -3px;">
-        <label>Judul Catatan</label><br>
-        <input class="form-control" type="text" name="judul_catatan" placeholder="Judul Catatan" /><br>
-        <label>Nama Siswa</label><br>
-        <select name="nama_siswa" class="form-control">
-            <option>Pilih</option>
-            @foreach($data2 as $k)
-            <option value="{{$k->id_siswa ?? 'Null'}}:{{$k->jurusanzzz->id_jurusan}}:{{$k->Angkatannn->id_angkatan}}">{{$k->nama_siswa ?? "Tidak Ada Data"}} ({{$k->jurusanzzz->jurusan ?? "Tidak Ada Data"}}) (A-{{$k->Angkatannn->angkatan ?? "Tidak Ada Data"}})</option>
-        @endforeach
 
-        </select><br>
-        <label>Tanggal Buat</label><br>
-        <input class="form-control" type="date" value="{{\Carbon\Carbon::now()->toDateString()}}" name="tanggal"/><br>
-        <input class="form-control" type="hidden" name="id_peng" value="{{auth()->user()->id}}" placeholder="penulis" />
-        <button class="btn btn-primary">Tambah</button>
-        </form>
-            </div>
-        </div>
-    </div>
 @endsection

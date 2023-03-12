@@ -10,6 +10,8 @@ use App\Models\Komentar;
 use App\Models\Jurusan;
 use App\Models\Angkatan;
 use App\Models\Nama_Siswa;
+use App\Models\Kategori;
+use Illuminate\Support\Facades\DB;
 
 class asramaProject extends Controller
 {
@@ -85,12 +87,15 @@ class asramaProject extends Controller
 
     public function lihat_catatan_detail($id){
         $tabel = catatan_asrama::find($id);
-        return view('catatan_detail',['data' => $tabel]);
+        $tabel2 = Kategori::all();
+        $tabel3 = Kategori::find($id);
+        return view('catatan_detail',['data' => $tabel,'data2' => $tabel2,'data3'=>$tabel3]);
     }
 
     public function update_catatan(Request $req){
         $ids = $req->id_catatan;
         $tabel = catatan_asrama::find($ids);
+        $tabel->id_kats = $req->kategori;
         $tabel->judul = $req->judul;
         $tabel->isi = $req->deskripsi;
         $tabel->update();
@@ -105,7 +110,8 @@ class asramaProject extends Controller
 
     public function catatan_publik(){
         $tabel = catatan_asrama::with('pengguna')->get();
-        return view('catatan_publik',['data' => $tabel]);
+        $tabel2 = Kategori::all();
+        return view('catatan_publik',['data' => $tabel,'data2' => $tabel2]);
     }
 
     public function isi_catatan($id){
@@ -145,7 +151,7 @@ class asramaProject extends Controller
        ]);
    }
 
-  
+
 
 
 // ------------------+++++++++++++++++++++++-------------------------------------------------------
@@ -189,7 +195,7 @@ class asramaProject extends Controller
        return back();
    }
 
-  
+
    public function tambah_jurusan(Request $req){
     $tabel = new jurusan;
     $tabel->jurusan = $req->jurusan;
@@ -250,11 +256,10 @@ public function keluarkan_anak($id,$status){
 }
 
 public function catatan_siswa($id){
-
-
     $tabel = Nama_Siswa::find($id);
     $tabel2 = catatan_asrama::where('id_siswas',$id)->get();
-    return view('catatan_siswa',['data' => $tabel,'data2' => $tabel2]);
+    $tabel3 = Kategori::all();
+    return view('catatan_siswa',['data' => $tabel,'data2' => $tabel2,'data3' => $tabel3]);
 }
 
 public function update_siswa(Request $req){
@@ -301,5 +306,40 @@ public function lihat_angkatan_kelas_11(){
     $tabel->status = $status;
     $tabel->update();
     return back();
+ }
+
+ public function tambah_kategori(Request $req){
+    DB::begintransaction();
+
+    try{
+        $tabel = new Kategori();
+        $tabel->kategori = $req->kategori;
+        $tabel->save();
+
+        DB::commit();
+
+        return back();
+
+    }catch(\Exception $e){
+        DB::rollback();
+
+        return back()->with('error','Terjadi Kesalahan Saat Memasukan Kategori!');
+    }
+ }
+
+ public function update_kategori($ids,$lol2){
+    $tabel = Kategori::find($ids);
+    $tabel->kategori = $lol2;
+    $tabel->update();
+    return 'success';
+ }
+
+ public function hapus_kategori($id_hapus){
+    $tabel = Kategori::find($id_hapus);
+    $tabel->delete();
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Data Berhasil Di Hapus',
+    ]);
  }
 }

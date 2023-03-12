@@ -24,7 +24,7 @@
     .komentar{
         margin-top: 2em;
         margin-left: 5px;
-    
+
     }
 
     .komen{
@@ -50,7 +50,7 @@
     @media(max-width:4000px){
         .isi_saja{
             width: 90%;
-        } 
+        }
         .deskripsi{
             width: 90%;
         }
@@ -94,7 +94,7 @@
         }
 
         @media(max-width:415px){
-           
+
             .tombol{
                 margin-left: 19em;
                 margin-top: -45px;
@@ -134,7 +134,7 @@
 
 <a href="/catatan_siswa/{{$data->id_siswas}}" style="text-decoration: none">Kembali</a>
 <div class="isi_saja" style="display: flex; gap: 5px;">
-    <h2>{{$data->judul}}</h2> @if($data->id_pengguna == auth()->user()->id) <a href="/catatan_detail/{{$data->id_catatan}}" style="text-decoration: none">Edit</a> @else @endif
+    <h2>{{$data->judul}} [{{ $data->kategoris->kategori ?? "Kategori" }}]</h2>@if($data->id_pengguna == auth()->user()->id) <a href="/catatan_detail/{{$data->id_catatan}}" style="text-decoration: none">Edit</a> @else @endif
 </div>
 
 <div class="deskripsi" style="margin-top: 5px;">
@@ -144,7 +144,7 @@
 </div>
 
 <br><br>
- 
+
 <b>{{$hitung}} Komentar</b>
 
 <form action="/tambah_komentar" class="pesan" method="POST">
@@ -160,7 +160,7 @@
     <div class="isinya" style="background: #a52a2a2b;padding: 5px; margin-left: -5px; width: 100%;">
     @if($k->nama_user == auth()->user()->id)
     <pre><b style="color: #6610f2;">Anda</b> {{$k->komentar}} <a href="#" class="hapus" komen-id="{{$k->id_komentar}}">Hapus</a></pre>
-    
+
     @else
     <b>{{$k->userz->username}}</b>  {{$k->komentar}}
     @endif
@@ -182,7 +182,7 @@
              if(kalauTerhapus){
                  window.location = "/hapus_komentar/"+ids;
              }else{
-                 
+
              }
          })
     });

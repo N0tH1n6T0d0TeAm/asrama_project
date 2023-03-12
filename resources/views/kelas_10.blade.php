@@ -91,6 +91,7 @@ a.keluar{
 }
 </style>
 
+
 @if(auth()->user()->level == "pamong" || auth()->user()->level == "superadmin")
     <a href="#tambah" style="text-decoration: none">Tambah Angkatan</a>
 @endif
@@ -102,6 +103,7 @@ a.keluar{
             <th>No</th>
             <th>Angkatan</th>
             <th>Naik Kelas</th>
+            <th></th>
             <th>Hapus</th>
         </tr>
     @else
@@ -116,7 +118,7 @@ a.keluar{
             <tr>
                 <td>{{$no++}}</td>
                 <td><a href="/jurusan/{{$p->id_angkatan}}" style="text-decoration: none">A-{{$p->angkatan}}</a></td>
-                
+
                 <td><button type="button" lolz="{{$p->id_angkatan}}" class="btn btn-success hmm" title="Naik Kelas"><i class="fa fa-arrow-right"></i></button></td>
                 <td><input type="hidden" style="width: 5%;" id="kelas" name="kelas" value="11"></td>
                 <td><button zzz="{{$p->id_angkatan}}" class="btn btn-danger hapus"><i class="fa fa-trash"></i></button></td>
@@ -125,8 +127,6 @@ a.keluar{
         <tr>
              <td>{{$no++}}</td>
             <td><a href="/jurusan/{{$p->id_angkatan}}" style="text-decoration: none">A-{{$p->angkatan}}</a></td>
-                
-
             </tr>
         @endif
         @endforeach
@@ -145,9 +145,9 @@ a.keluar{
         <input class="form-control" type="number" name="angkatan" placeholder="Angkatan" />
 
 
-        
+
          <input class="form-control" type="hidden" value="10" name="kelas" placeholder="Kelas" />
-         
+
         <button class="btn btn-primary">Tambah</button>
         </form>
             </div>
@@ -158,7 +158,7 @@ a.keluar{
     $('.hmm').click(function(){
         var id = $(this).attr('lolz');
         var kelas = $('#kelas').val();
-        
+
         swal({
             title: "Anda Yakin?",
             text: "Apakah Anda Yakin Angkatan Ini Dinyatakan Naik Kelas?",

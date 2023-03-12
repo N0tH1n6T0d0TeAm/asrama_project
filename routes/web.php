@@ -14,11 +14,7 @@ use App\Http\Controllers\asramaProject;
 |
 */
 
-//Route::view('test','test');
-
-// Route::get('adminLogin', function () {
-//     return view('login');
-// })->middleware('guest')->name('login');
+Route::view('test','test');
 
 Route::get('/', function () {
     return view('login');
@@ -32,6 +28,7 @@ Route::get('logout',[asramaProject::class,'logout']);
 
 Route::group(['middleware'=>['auth']],function(){
     Route::view('home','home');
+   // Route::view('real','real');
 
     Route::view('pengguna','pengguna');
     Route::get('pengguna',[asramaProject::class,'lihat_pengguna']);
@@ -91,4 +88,8 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('status_tidak_aktif',[asramaProject::class,'status_tidak_aktif']);
     Route::get('kembali_semula/{ids}/{status}',[asramaProject::class,'kembali_semula']);
     Route::get('kembali_semula_siswa/{ids}/{status}',[asramaProject::class,'kembali_semula_siswa']);
+
+    Route::post('tambah_kategori',[asramaProject::class,'tambah_kategori']);
+    Route::get('update_kategori/{ids}/{lol2}',[asramaProject::class,'update_kategori']);
+    Route::delete('hapus_kategori/{id_hapus}',[asramaProject::class,'hapus_kategori']);
 });

@@ -16,6 +16,11 @@ th, td {
 tr:nth-child(odd) {
     background-color: #f2f2f2;
 }
+.kategori_pilih{
+    width: 18%;
+    margin-top: -2em;
+    margin-left: 7em;
+}
 @media(max-width: 600px){
     table {
     border: 0;
@@ -24,7 +29,7 @@ tr:nth-child(odd) {
   table caption {
     font-size: 1.3em;
   }
-  
+
   table thead {
     border: none;
     clip: rect(0 0 0 0);
@@ -35,20 +40,20 @@ tr:nth-child(odd) {
     position: absolute;
     width: 1px;
   }
-  
+
   table tr {
     border-bottom: 3px solid #ddd;
     display: block;
     margin-bottom: .625em;
   }
-  
+
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
     text-align: right;
   }
-  
+
   table td::before {
     content: attr(data-label);
     float: left;
@@ -147,6 +152,13 @@ a.keluar{
  @endif
 </form>
 
+<select class="form-control kategori_pilih">
+    <option value="">Kategori</option>
+    @foreach($data3 as $d)
+    <option value="{{ $d->kategori }}">{{ $d->kategori }}</option>
+    @endforeach
+</select>
+
 @php
     function tgl_indo($tanggal){
         $bulan = array(
@@ -167,30 +179,36 @@ a.keluar{
         return $hmm = $hmm[2].' '.$bulan[(int)[1]].' '.$hmm[0];
     }
 @endphp
-<table>
+<table class="table-data">
     <thead>
     <tr>
         <th>No</th>
         <th>Judul</th>
+        <th>Kategori</th>
         <th>Tanggal</th>
         <th>Penulis</th>
     </tr>
 </thead>
-    
+
 
     @php $no = 1; @endphp
 
     @foreach($data2 as $k)
-    <tr>
+    <tr data-type="{{ $k->kategoris->kategori ?? '' }}">
         <td data-label="no">{{$no++}}</td>
         <td data-label="judul"><a href="/isi_catatan/{{$k->id_catatan}}">{{$k->judul}}</a></td>
+        @if($k->id_kats == NULL)
+        <td data-label="kategori" style="color:red;">Tidak Ada Kategori</td>
+        @else
+        <td data-label="kategori">{{ $k->kategoris->kategori ?? "Belum Ada Kategori" }}</td>
+        @endif
         <td data-label="tanggal">{{tgl_indo($k->tanggal)}}</td>
         <td data-label="penulis">
             @if($k->id_pengguna == auth()->user()->id)
             <b>Anda</b>
             @else
             {{$k->pengguna->username}}
-            @endif            
+            @endif
         </td>
     </tr>
     @endforeach
@@ -211,5 +229,19 @@ a.keluar{
         <input type="hidden" name="id_siswa" value="{{$data->id_siswa}}" />
         <button class="btn btn-primary">Tambah</button>
         </form>
-            </div>
-@endsection 
+    </div>
+
+    <script>
+        $('.kategori_pilih').on('change',function(e){
+            var lol = e.target.value;
+            var data = $('.table-data');
+
+            if(lol.length){
+                data.find('tr[data-type!='+ lol +']').hide();
+                data.find('tr[data-type='+ lol +']').show();
+            }else{
+                data.find('tr').show();
+            }
+        })
+    </script>
+@endsection

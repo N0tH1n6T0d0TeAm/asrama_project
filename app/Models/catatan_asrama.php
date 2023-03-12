@@ -15,12 +15,16 @@ class catatan_asrama extends Model
         'judul','isi','id_pengguna','tanggal'
     ];
 
-    
+
     public function pengguna(){
         return $this->belongsTo('\App\Models\User','id_pengguna');
     }
 
     public function siswa(){
         return $this->belongsTo('\App\Models\Nama_Siswa','id_siswas');
+    }
+
+    public function kategoris(){
+        return $this->belongsTo(Kategori::class,'id_kats');
     }
 }

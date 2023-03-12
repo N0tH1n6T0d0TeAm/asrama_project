@@ -115,12 +115,12 @@ table {
     border: 0;
   }
 
-  
+
 
   table caption {
     font-size: 1.3em;
   }
-  
+
   table thead {
     border: none;
     clip: rect(0 0 0 0);
@@ -131,27 +131,27 @@ table {
     position: absolute;
     width: 1px;
   }
-  
+
   table tr {
     border-bottom: 3px solid #ddd;
     display: block;
     margin-bottom: .625em;
   }
-  
+
   table td {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
     text-align: right;
   }
-  
+
   table td::before {
     content: attr(data-label);
     float: left;
     font-weight: bold;
     text-transform: uppercase;
   }
-  
+
   table td:last-child {
     border-bottom: 0;
   }
@@ -169,6 +169,7 @@ table {
   <th>No</th>
   <th>Nama</th>
   <th>Status</th>
+  <th>Level</th>
   <th>Update</th>
   <th>Hapus</th>
   </tr>
@@ -189,7 +190,8 @@ table {
                 <li class="text-muted">&#x2022; Offline</li>
             @endif
         </td>
-       
+        <td data-label="Level">{{ $p->level }}</td>
+
         <td data-label = "Update">
          @if(auth()->user()->id == $p->id)
         <a href="#update"><button class="btn btn-success updates" value="{{$p->id}}"><i class="fa fa-pencil-square"></i></button></a>
@@ -197,7 +199,7 @@ table {
         <br>
          @endif
         </td>
-       
+
         <td data-label = "hapus">
         @if(auth()->user()->id != $p->id)
         <a href="#" class="btn btn-danger hapus" id_data="{{$p->id}}"><i class="fa fa-trash"></i></a>
@@ -228,10 +230,10 @@ table {
         <hr style="border: 1px solid black;margin-top: -3px;">
         <label>Nama Pengguna</label><br>
         <input class="form-control" type="text" name="username" placeholder="Nama Pengguna" /><br>
-        
+
 
         <input class="form-control" type="hidden" value="guru" name="level" placeholder="Level" />
-        
+
         <label>Password</label><br>
         <input class="form-control" type="password" value="Rahasia" name="password" id="pass2" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
         <button class="btn btn-primary">Tambah</button>
@@ -241,10 +243,10 @@ table {
         <hr style="border: 1px solid black;margin-top: -3px;">
         <label>Nama Pengguna</label><br>
         <input class="form-control" type="text" name="username" placeholder="Nama Pengguna" /><br>
-        
+
 
         <input class="form-control" type="hidden" value="yayasan" name="level" placeholder="Level" />
-        
+
         <label>Password</label><br>
         <input class="form-control" type="password" value="Rahasia" name="password" id="pass2" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
         <button class="btn btn-primary">Tambah</button>
@@ -288,16 +290,16 @@ table {
                     console.log(response.data.username);
                     $('#nama').val(response.data.username);
                     $('#id').val(id);
-                    
+
                 }
-            }); 
+            });
         });
     });
 
     $(".toggle-password").click(function() {
 
     $(this).toggleClass("fa-eye fa-eye-slash");
-    
+
     var x = document.getElementById("pass")
     if (x.type === "password") {
     x.type = "text";
@@ -309,7 +311,7 @@ table {
  $(".toggle-password").click(function() {
 
     $(this).toggleClass("fa-eye fa-eye-slash");
-    
+
     var x = document.getElementById("pass2")
     if (x.type === "password") {
     x.type = "text";
@@ -320,7 +322,7 @@ table {
 
 
 $('.hapus').click(function(){
-var id = $(this).attr('id_data'); 
+var id = $(this).attr('id_data');
     swal({
   title: "Apakah Anda Yakin?",
   text: "Jika Anda Hapus,Akun Ini Akan Terhapus Selamanya!",
