@@ -73,11 +73,20 @@ a.keluar{
 }
 </style>
 
-    <table>
+    
             <a href="/home" class="links">Pergi Ke Beranda</a>
-        <table>
+
+            <select class="form-control select" style="width: 10%;">
+            <option value="">Kategori</option>
+            @foreach($data3 as $d)
+            <option value="{{$d->kategori}}">{{$d->kategori}}</option>
+            @endforeach
+        </select>
 
         <h2 align="center">Catatan Anda Lainnya</h2>
+
+        <table class="data-table">
+
 
         <tr>
             <th>No</th>
@@ -85,6 +94,7 @@ a.keluar{
             <th>Kepada</th>
             <th>Jurusan</th>
             <th>Angkatan</th>
+            <th>Kategori</th>
             <th>Tanggal</th>
         </tr>
 
@@ -114,17 +124,31 @@ a.keluar{
         @endphp
 
     @foreach($data as $k)
-    <tr>
+    <tr data-type="{{$k->kategoris->kategori}}">
         <td>{{$no++}}</td>
         <td><a href="/catatan_detail/{{$k->id_catatan}}" style="text-decoration: none;">{{$k->judul}}</a></td>
         <td><a href="/catatan_siswa/{{$k->id_siswas}}" style="text-decoration: none">{{$k->siswa->nama_siswa ?? "Tidak Ada Data"}}</a></td>
         <td>{{$k->siswa->Jurusanzzz->jurusan }}</td>
         <td>A-{{ $k->siswa->Angkatannn->angkatan }}</td>
+        <td>{{$k->kategoris->kategori}}</td>
         <td>{{tgl_indo($k->tanggal)}}</td>
     </tr>
     @endforeach
 
     </table>
 
+    <script type="text/javascript">
+        $('.select').on('change',function(e){
+            var pilih = e.target.value;
+            var data = $('.data-table');
+
+            if(pilih.length){
+                data.find('tr[data-type!='+ pilih +']').hide();
+                data.find('tr[data-type='+ pilih + ']').show();
+            }else{
+                data.find('tr').show();
+            }
+        })
+    </script>
 
 @endsection
