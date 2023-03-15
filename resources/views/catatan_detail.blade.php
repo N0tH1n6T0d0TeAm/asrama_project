@@ -97,7 +97,7 @@ a.keluar{
     }
 
     .info .lol .update{
-        margin: -6.7% 17% auto;
+        margin: -6.7% 19% auto;
     }
 
     .info .lol .hapus_kat{
@@ -111,6 +111,7 @@ a.keluar{
             margin: -3% 70% auto;
             width: 250px;
         }
+
 
 
 
@@ -286,7 +287,7 @@ a.keluar{
     <a href="#tambah_kategori" class="btn btn-success" class="kategs">+</a>
     </div>
 
-    <div class="row" style="margin-left: 9em; margin-top: -1.8em; height: 1.8em;width: 90%; color: rgb(255, 255, 255);">
+    <div class="row" style="margin-left: 10em; margin-top: -1.8em; height: 1.8em;width: 90%; color: rgb(255, 255, 255);">
         <a href="#edit_kategori" class="btn btn-warning" class="kategs"><i class="fa fa-pencil-square"></i></a>
         </div>
 

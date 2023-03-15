@@ -238,14 +238,14 @@ table {
         <input class="form-control" type="password" value="Rahasia" name="password" id="pass2" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
         <button class="btn btn-primary">Tambah</button>
 
-        @else(auth()->user()->level == "yayasan")
+        @else(auth()->user()->level == "kepala sekolah")
         <h2>Tambah Pengguna <a href="#" class="keluar">&times</a></h2>
         <hr style="border: 1px solid black;margin-top: -3px;">
         <label>Nama Pengguna</label><br>
         <input class="form-control" type="text" name="username" placeholder="Nama Pengguna" /><br>
 
 
-        <input class="form-control" type="hidden" value="yayasan" name="level" placeholder="Level" />
+        <input class="form-control" type="hidden" value="kepala sekolah" name="level" placeholder="Level" />
 
         <label>Password</label><br>
         <input class="form-control" type="password" value="Rahasia" name="password" id="pass2" placeholder="Password" /><span toggle="#password-field" class="show-hide"><i class="fas fa-eye toggle-password"></i></span><br>
