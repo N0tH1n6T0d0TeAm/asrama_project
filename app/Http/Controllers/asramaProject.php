@@ -38,7 +38,7 @@ class asramaProject extends Controller
     }
 
     public function lihat_pengguna(){
-        $table = User::where('level','guru')->orWhere('level','yayasan')->orWhere('level','pamong')->get();
+        $table = User::where('level','guru')->orWhere('level','kepala sekolah')->orWhere('level','pamong')->get();
         return view('pengguna',['data'=>$table]);
     }
 
@@ -82,7 +82,8 @@ class asramaProject extends Controller
 
         $tabel = catatan_asrama::where('id_pengguna',auth()->user()->id)->with('siswa')->get();
         $buat_siswa = Nama_Siswa::where('status','aktif')->get();
-        return view('catatan_pribadi',['data'=>$tabel,'data2' => $buat_siswa]);
+        $data3 = Kategori::all();
+        return view('catatan_pribadi',['data'=>$tabel,'data2' => $buat_siswa,'data3' => $data3]);
     }
 
     public function lihat_catatan_detail($id){
